@@ -134,7 +134,9 @@ func (chbtc *Chbtc) GetAccount() (*Account, error) {
 		return nil, err;
 	}
 
-	if respmap["code"].(float64) != 1000 {
+	
+       
+        if respmap["code"] != nil && respmap["code"].(float64) != 1000 {
 		return nil , errors.New(string(resp))
 	}
 

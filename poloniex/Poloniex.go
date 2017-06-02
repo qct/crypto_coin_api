@@ -26,7 +26,9 @@ const (
 var _CURRENCYPAIR_TO_SYMBOL = map[CurrencyPair]string{
 	//BTC_LTC : "BTC_LTC",
 	ETH_BTC: "BTC_ETH",
+	ETC_ETH: "ETH_ETC",
 	ETC_BTC: "BTC_ETC",
+	LTC_BTC: "BTC_LTC",
 	XCN_BTC: "BTC_XCN",
 	SYS_BTC: "BTC_SYS",
 	ZEC_BTC: "BTC_ZEC"}
@@ -441,7 +443,8 @@ type PoloniexDepositsWithdrawals struct {
 		Amount        float64   `json:"amount,string"`
 		Confirmations int       `json:"confirmations"`
 		TransactionID string    `json:"txid"`
-		Timestamp     time.Time `json:"timestamp"`
+		Timestamp     int       `json:"timestamp"`
+		//Timestamp     time.Time `json:"timestamp"`
 		Status        string    `json:"status"`
 	} `json:"deposits"`
 	Withdrawals []struct {
@@ -451,7 +454,8 @@ type PoloniexDepositsWithdrawals struct {
 		Amount           float64   `json:"amount,string"`
 		Confirmations    int       `json:"confirmations"`
 		TransactionID    string    `json:"txid"`
-		Timestamp        time.Time `json:"timestamp"`
+		Timestamp        int       `json:"timestamp"`
+		//Timestamp        time.Time `json:"timestamp"`
 		Status           string    `json:"status"`
 		IPAddress        string    `json:"ipAddress"`
 	} `json:"withdrawals"`
@@ -497,7 +501,7 @@ func (poloniex *Poloniex) GetDepositsWithdrawals(start, end string) (*PoloniexDe
 }
 
 func (poloniex *Poloniex) buildPostForm(postForm *url.Values) (string, error) {
-	postForm.Add("nonce", fmt.Sprintf("%d", time.Now().UnixNano() ))
+	postForm.Add("nonce", fmt.Sprintf("%d", time.Now().UnixNano()+500000000000 ))
 	payload := postForm.Encode()
 	//println(payload)
 	sign, err := GetParamHmacSHA512Sign(poloniex.secretKey, payload)
