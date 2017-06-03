@@ -2,7 +2,7 @@ package chbtc
 
 import (
 	"net/http"
-	. "github.com/nntaoli/crypto_coin_api"
+	. "github.com/qct/crypto_coin_api"
 	"fmt"
 	"strconv"
 	"log"

@@ -3,7 +3,7 @@ package okcoin
 import (
 	"encoding/json"
 	"errors"
-	. "github.com/nntaoli/crypto_coin_api"
+	. "github.com/qct/crypto_coin_api"
 	"net/http"
 	"net/url"
 	"strconv"

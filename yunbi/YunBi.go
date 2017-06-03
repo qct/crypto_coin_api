@@ -2,7 +2,7 @@ package yunbi
 
 import (
 	"net/http"
-	. "github.com/nntaoli/crypto_coin_api"
+	. "github.com/qct/crypto_coin_api"
 	"fmt"
 	"log"
 	"io/ioutil"

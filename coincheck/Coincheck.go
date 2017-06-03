@@ -2,7 +2,7 @@ package coincheck
 
 import (
 	"fmt"
-	. "github.com/nntaoli/crypto_coin_api"
+	. "github.com/qct/crypto_coin_api"
 	"log"
 	"net/http"
 	//"strconv"

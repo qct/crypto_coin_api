@@ -1,7 +1,7 @@
 package huobi
 
 import (
-	. "github.com/nntaoli/crypto_coin_api"
+	. "github.com/qct/crypto_coin_api"
 	"io/ioutil"
 	"errors"
 	"encoding/json"
