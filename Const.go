@@ -119,14 +119,14 @@ var CurrencyPairSymbol = map[CurrencyPair]string{
 	BTC_USD : "btc_usd",
 	LTC_CNY : "ltc_cny",
 	LTC_USD : "ltc_usd",
-        LTC_BTC : "ltc_btc",
+	LTC_BTC : "ltc_btc",
 	ETH_CNY : "eth_cny",
 	ETH_USD : "eth_usd",
 	ETH_BTC : "eth_btc",
 	ETC_CNY : "etc_cny",
 	ETC_USD : "etc_usd",
 	ETC_BTC : "etc_btc",
-        ETC_ETH : "etc_eth"};
+	ETC_ETH : "etc_eth"};
 
 var
 (
