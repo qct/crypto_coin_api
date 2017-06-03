@@ -134,8 +134,8 @@ func (chbtc *Chbtc) GetAccount() (*Account, error) {
 		return nil, err;
 	}
 
-	
-       
+
+
         if respmap["code"] != nil && respmap["code"].(float64) != 1000 {
 		return nil , errors.New(string(resp))
 	}
@@ -461,4 +461,12 @@ func (chbtc *Chbtc) CancelWithdraw(id string, currency Currency, safePwd string)
 
 func (chbtc *Chbtc) GetTrades(currencyPair CurrencyPair, since int64) ([]Trade, error){
 	panic("unimplements")
+}
+
+func (chbtc *Chbtc) MarketBuy(amount, price string, currency CurrencyPair) (*Order, error) {
+	panic("unsupport the market order")
+}
+
+func (chbtc *Chbtc) MarketSell(amount, price string, currency CurrencyPair) (*Order, error) {
+	panic("unsupport the market order")
 }
