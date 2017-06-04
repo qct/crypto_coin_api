@@ -40,8 +40,7 @@ func (hb *HuoBi) GetDepthREST(depthType string, currency CurrencyPair) (*Depth, 
 
     var depth Depth;
 
-    //asks, isOK := bodyDataMap["tick"]["asks"].([]interface{})
-    asks, isOK := bodyDataMap["tick"].([]interface{})
+    asks, isOK := bodyDataMap["tick"].([]interface{})["asks"].([]interface{})
     if !isOK {
         return nil, errors.New("asks assert error")
     }
@@ -62,7 +61,7 @@ func (hb *HuoBi) GetDepthREST(depthType string, currency CurrencyPair) (*Depth, 
         depth.AskList = append(depth.AskList, dr);
     }
 
-    for _, v := range bodyDataMap["tick"].([]interface{}) {
+    for _, v := range bodyDataMap["tick"].([]interface{})["bids"].([]interface{}) {
         var dr DepthRecord;
         for i, vv := range v.([]interface{}) {
             switch i {
