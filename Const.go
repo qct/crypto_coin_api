@@ -67,7 +67,7 @@ const
 
 	LTC_CNY
 	LTC_USD
-        LTC_BTC
+	LTC_BTC
 
 	ETH_CNY
 	ETH_USD
