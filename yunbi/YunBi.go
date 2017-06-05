@@ -66,14 +66,14 @@ func (yunbi *YunBi)GetTicker(currency CurrencyPair) (*Ticker, error) {
 		log.Println(err)
 		return nil, err
 	}
-	
+
 	//println(string(respData))
 	tickerResp := new(_TickerResponse)
 	err = json.Unmarshal(respData, tickerResp)
 	if err != nil {
 		return nil , err
 	}
-	
+
 	ticker := new(Ticker)
 	ticker.Date = tickerResp.At
 	ticker.Buy = tickerResp.Ticker.Buy
@@ -82,7 +82,7 @@ func (yunbi *YunBi)GetTicker(currency CurrencyPair) (*Ticker, error) {
 	ticker.Low = tickerResp.Ticker.Low
 	ticker.High = tickerResp.Ticker.High
 	ticker.Vol = tickerResp.Ticker.Vol
-	
+
 	return ticker, nil
 }
 
@@ -93,9 +93,9 @@ func (yunbi *YunBi)GetDepth(size int, currency CurrencyPair) (*Depth, error) {
 		log.Println(err)
 		return nil, err
 	}
-	
+
 	depth := new(Depth)
-	
+
 	for _, v := range respMap["asks"].([]interface{}) {
 		var dr DepthRecord;
 		for i, vv := range v.([]interface{}) {
@@ -108,7 +108,7 @@ func (yunbi *YunBi)GetDepth(size int, currency CurrencyPair) (*Depth, error) {
 		}
 		depth.AskList = append(depth.AskList, dr);
 	}
-	
+
 	for _, v := range respMap["bids"].([]interface{}) {
 		var dr DepthRecord;
 		for i, vv := range v.([]interface{}) {
@@ -121,7 +121,7 @@ func (yunbi *YunBi)GetDepth(size int, currency CurrencyPair) (*Depth, error) {
 		}
 		depth.BidList = append(depth.BidList, dr);
 	}
-	
+
 	return depth, nil
 }
 
@@ -129,13 +129,13 @@ func (yunbi *YunBi)GetAccount() (*Account, error) {
 	urlStr := API_URL + API_URI_PREFIX + USER_INFO_URL;
 	postParams := url.Values{}
 	yunbi.buildPostForm("GET", API_URI_PREFIX + USER_INFO_URL, &postParams)
-	
+
 	resp, err := HttpGet(yunbi.client, urlStr + "?" + postParams.Encode());
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-	
+
 	//log.Println(resp)
 	if resp["error"] != nil{
 		errmap := resp["error"].(map[string]interface{})
@@ -146,20 +146,20 @@ func (yunbi *YunBi)GetAccount() (*Account, error) {
 
 	acc := new(Account)
 	acc.SubAccounts = make(map[Currency]SubAccount)
-	
+
 	accountsMap := resp["accounts"].([]interface{})
 	for _, v := range accountsMap {
 		vv := v.(map[string]interface{})
 		subAcc := SubAccount{}
 		subAcc.Amount, _ = strconv.ParseFloat(vv["balance"].(string), 64)
 		subAcc.ForzenAmount, _ = strconv.ParseFloat(vv["locked"].(string), 64)
-		
+
 		var
 		(
 			currency Currency
 			skip bool = false
 		)
-		
+
 		switch vv["currency"] {
 		case "btc":
 			currency = BTC
@@ -176,13 +176,13 @@ func (yunbi *YunBi)GetAccount() (*Account, error) {
 		default:
 			skip = true
 		}
-		
+
 		if !skip {
 			subAcc.Currency = currency
 			acc.SubAccounts[currency] = subAcc
 		}
 	}
-	
+
 	return acc, nil
 }
 
@@ -208,28 +208,28 @@ func (yunbi *YunBi)placeOrder(side, amount, price string, currencyPair CurrencyP
 	params.Set("side", side)
 	params.Set("price", price)
 	params.Set("volume", amount)
-	
+
 	yunbi.buildPostForm("POST", API_URI_PREFIX + PLACE_ORDER_API, &params)
-	
+
 	resp, err := HttpPostForm(yunbi.client, API_URL + API_URI_PREFIX + PLACE_ORDER_API, params)
 	if err != nil {
 		log.Println(err)
 		return nil, err
 	}
-	
+
 	//println(string(resp))
-	
+
 	respMap := make(map[string]interface{})
 	err = json.Unmarshal(resp, &respMap)
 	if err != nil {
 		log.Println(err, string(resp))
 		return nil, err
 	}
-	
+
 	if respMap["error"] != nil {
 		return nil, errors.New(string(resp))
 	}
-	
+
 	ord := new(Order)
 	ord.OrderID = int(respMap["id"].(float64))
 	ord.Currency = currencyPair
@@ -237,14 +237,14 @@ func (yunbi *YunBi)placeOrder(side, amount, price string, currencyPair CurrencyP
 	ord.Amount, _ = strconv.ParseFloat(amount, 64);
 	ord.Status = ORDER_UNFINISH;
 	ord.OrderTime = int(time.Now().Unix())
-	
+
 	switch side {
 	case "buy":
 		ord.Side = BUY;
 	case "sell":
 		ord.Side = SELL;
 	}
-	
+
 	return ord, nil
 }
 
@@ -252,22 +252,22 @@ func (yunbi *YunBi)CancelOrder(orderId string, currency CurrencyPair) (bool, err
 	params := url.Values{}
 	params.Set("id", orderId)
 	yunbi.buildPostForm("POST", API_URI_PREFIX + DELETE_ORDER_API, &params)
-	
+
 	resp, err := HttpPostForm(yunbi.client, API_URL + API_URI_PREFIX + DELETE_ORDER_API, params)
 	if err != nil {
 		log.Println(err, string(resp))
 		return false, err
 	}
-	
+
 	//println(string(resp))
-	
+
 	respMap := make(map[string]interface{})
 	err = json.Unmarshal(resp, &respMap)
 	if err != nil {
 		log.Println(err, string(resp))
 		return false, err
 	}
-	
+
 	return true, nil
 }
 
@@ -366,16 +366,16 @@ func (yunbi *YunBi)parseOrder(orderMap map[string]interface{}) Order {
 func (yunbi *YunBi) buildPostForm(httpMethod, apiURI string, postForm *url.Values) error {
 	postForm.Set("access_key", yunbi.accessKey);
 	postForm.Set("tonce", fmt.Sprintf("%d", time.Now().UnixNano() / 1000000));
-	
+
 	params := postForm.Encode();
 	payload := httpMethod + "|" + apiURI + "|" + params
 	//println(payload)
-	
+
 	sign, err := GetParamHmacSHA256Sign(yunbi.secretKey, payload);
 	if err != nil {
 		return err;
 	}
-	
+
 	postForm.Set("signature", sign);
 	//postForm.Del("secret_key")
 	return nil;
@@ -393,6 +393,14 @@ func convertCurrencyPair(currencyPair CurrencyPair) string {
 		return "zeccny"
 	case LTC_CNY:
 		return "ltccny"
+	case BTS_CNY:
+		return "btscny"
+	case SC_CNY:
+		return "sccny"
+	case GNT_CNY:
+		return "gntcny"
+	case REP_CNY:
+		return "repcny"
 	}
 	return "btccny"
 }

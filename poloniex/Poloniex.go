@@ -31,7 +31,14 @@ var _CURRENCYPAIR_TO_SYMBOL = map[CurrencyPair]string{
 	LTC_BTC: "BTC_LTC",
 	XCN_BTC: "BTC_XCN",
 	SYS_BTC: "BTC_SYS",
-	ZEC_BTC: "BTC_ZEC"}
+	ZEC_BTC: "BTC_ZEC",
+
+	BTS_BTC: "BTC_BTS",
+	SC_BTC: "BTC_SC",
+	GNT_BTC: "BTC_GNT",
+
+	REP_ETH: "ETH_REP",
+}
 
 type Poloniex struct {
 	accessKey,

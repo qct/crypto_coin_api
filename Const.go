@@ -53,6 +53,9 @@ const
 	ETC
 	ZEC
 	SC
+	REP
+	BTS
+	GNT
 )
 
 var currencyPairSymbol = [...]string{"btc_cny", "btc_usd", "btc_jpy", "fx_btc_jpy", "ltc_cny", "ltc_usd","ltc_btc", "eth_cny",
@@ -84,6 +87,18 @@ const
 	ZEC_CNY
 	ZEC_USD
 	ZEC_BTC
+
+	BTS_BTC
+	BTS_CNY
+
+	SC_BTC
+	SC_CNY
+
+	GNT_BTC
+	GNT_CNY
+
+	REP_CNY
+	REP_ETH
 )
 
 const
