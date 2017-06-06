@@ -38,6 +38,7 @@ var _CURRENCYPAIR_TO_SYMBOL = map[CurrencyPair]string{
 	GNT_BTC: "BTC_GNT",
 
 	REP_ETH: "ETH_REP",
+	REP_BTC: "BTC_REP",
 }
 
 type Poloniex struct {

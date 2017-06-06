@@ -56,6 +56,324 @@ const
 	REP
 	BTS
 	GNT
+
+	XPM
+	XRP
+	ZCC
+	MEC
+	ANC
+	BEC
+	PPC
+	SRC
+	TAG
+	WDC
+	XLM
+	DGC
+	QRK
+	DOGE
+	YBC
+	RIC
+	BOST
+	NXT
+	BLK
+	NRS
+	MED
+	NCS
+	EAC
+	XCN
+	SYS
+	XEM
+	VASH
+	DASH
+	EMC
+	HLB
+	ARDR
+	XZC
+	MGC
+	TMC
+	BNS
+	//	BTS
+	CORG
+	NEOS
+	XST
+	OneCR
+	BDC
+	DRKC
+	FRAC
+	SRCC
+	CC
+	DAO
+	eTOK
+	NAV
+	TRUST
+	AUR
+	DIME
+	EXP
+	GAME
+	IOC
+	BLU
+	FAC
+	GEMZ
+	CYC
+	EMO
+	JLH
+	XBC
+	XDP
+	//	DASH
+	GAP
+	SMC
+	XHC
+	BTCD
+	GRCX
+	XUSD
+	MIL
+	LGC
+	PIGGY
+	XCP
+	BURST
+	GNS
+	HIRO
+	HUGE
+	LC
+	FLDC
+	INDEX
+	LEAF
+	MYR
+	SPA
+	CURE
+	FLO
+	NAUT
+	SJCX
+	TWE
+	MON
+	BLOCK
+	CHA
+	GIAR
+	HZ
+	IFC
+	DGB
+	MRC
+	VIA
+	BTCS
+	GOLD
+	MMNXT
+	XLB
+	XMG
+	BALLS
+	HOT
+	NOTE
+	SYNC
+	//	ARDR
+	DNS
+	//	ETC
+	FRK
+	MAST
+	CLAM
+	NOBL
+	XXC
+	C2
+	NXC
+	Q2C
+	WIKI
+	XSV
+	AERO
+	FZN
+	MINT
+	QBK
+	VOX
+	BURN
+	LTBC
+	QCN
+	//	XEM
+	DICE
+	FLT
+	OMNI
+	AC
+	APH
+	BDG
+	BITCNY
+	CRYPT
+	//	NXT
+	OPAL
+	RZR
+	SHIBE
+	SQL
+	SUM
+	BANK
+	CON
+	JUG
+	METH
+	//	SC
+	UTIL
+	VTC
+	LOVE
+	MCN
+	POT
+	CINNI
+	ECC
+	GDN
+	GRS
+	KEY
+	SHOPX
+	XAP
+	STEEM
+	YIN
+	AMP
+	NMC
+	SRG
+	XDN
+	YANG
+	XAI
+	CCN
+	CGA
+	MAID
+	URO
+	X13
+	VRC
+	XCH
+	HYP
+	MRS
+	PLX
+	QORA
+	USDT
+	SLR
+	COMM
+	DIS
+	FVZ
+	IXC
+	LBC
+	GML
+	LTCX
+	NAS
+	AXIS
+	CNL
+	//	ETH
+	FLAP
+	FOX
+	QTL
+	RADS
+	//	RIC
+	SBD
+	BCC
+	CNOTE
+	FZ
+	GPC
+	//	MEC
+	SXC
+	VOOT
+	BITUSD
+	CAI
+	DIEM
+	XSI
+	ACH
+	CNMT
+	MAX
+	NBT
+	NSR
+	XMR
+	EMC2
+	PAWN
+	//	SYS
+	//	BOST
+	EFL
+	GRC
+	RDD
+	STRAT
+	TAC
+	BTM
+	JPC
+	KDC
+	MTS
+	N5X
+	//	BTC
+	PRC
+	UNITY
+	BONES
+	//	EAC
+	FCT
+	SILK
+	GPUC
+	SUN
+	//	XCN
+	BCN
+	MZC
+	UIS
+	//	XRP
+	GEO
+	LOL
+	DCR
+	NTX
+	//	ZEC
+	PMC
+	DVK
+	//	LTC
+	PAND
+	YC
+	GUE
+	LCL
+	BBR
+	NL
+	PRT
+	//	XPM
+	DSH
+	PTS
+	ULTC
+	WC
+	XCR
+	NOXT
+	UTC
+	AIR
+	BCY
+	ENC
+	LSK
+	MMXIV
+	SDC
+	SOC
+	TOR
+	SSD
+	UVC
+	WOLF
+	BBL
+	GLB
+	MMC
+	MNTA
+	RBY
+	ADN
+	BELA
+	//	DOGE
+	GNO
+	SWARM
+	BITS
+	HVC
+	ITC
+	USDE
+	AEON
+	EXE
+	XC
+	ABY
+	CACH
+	EBT
+	MIN
+	NXTI
+	FCN
+	LQD
+	MUN
+	//	WDC
+	XVC
+	ARCH
+	H2O
+	DRM
+	STR
+	YACC
+	//	BLK
+	FIBRE
+	HUC
+	//	NRS
+	PASC
+	FRQ
+	PINK
+	//	PPC
+	XPB
 )
 
 var currencyPairSymbol = [...]string{"btc_cny", "btc_usd", "btc_jpy", "fx_btc_jpy", "ltc_cny", "ltc_usd","ltc_btc", "eth_cny",
@@ -81,24 +399,106 @@ const
 	ETC_BTC
 	ETC_ETH
 
-	XCN_BTC
-	SYS_BTC
-
 	ZEC_CNY
 	ZEC_USD
 	ZEC_BTC
 
-	BTS_BTC
-	BTS_CNY
+	REP_CNY
+	REP_ETH
+	REP_BTC
 
-	SC_BTC
+	XRP_CNY
+	XRP_USD
+	XRP_BTC
+
+	DOGE_CNY
+	DOGE_USD
+	DOGE_BTC
+
+	BLK_CNY
+	BLK_USD
+	BLK_BTC
+
+	LSK_CNY
+	LSK_USD
+	LSK_BTC
+
+	GAME_CNY
+	GAME_USD
+	GAME_BTC
+
 	SC_CNY
+	SC_USD
+	SC_BTC
 
 	GNT_BTC
 	GNT_CNY
 
-	REP_CNY
-	REP_ETH
+	BTS_CNY
+	BTS_USD
+	BTS_BTC
+
+	HLB_CNY
+	HLB_USD
+	HLB_BTC
+
+	XPM_CNY
+	XPM_USD
+	XPM_BTC
+
+	RIC_CNY
+	RIC_USD
+	RIC_BTC
+
+	XEM_CNY
+	XEM_USD
+	XEM_BTC
+
+	EAC_CNY
+	EAC_USD
+	EAC_BTC
+
+	PPC_CNY
+	PPC_USD
+	PPC_BTC
+
+	PLC_CNY
+	PLC_USD
+	PLC_BTC
+
+	VTC_CNY
+	VTC_USD
+	VTC_BTC
+
+	VRC_CNY
+	VRC_USD
+	VRC_BTC
+
+	NXT_CNY
+	NXT_USD
+	NXT_BTC
+
+	ZCC_CNY
+	ZCC_USD
+	ZCC_BTC
+
+	WDC_CNY
+	WDC_USD
+	WDC_BTC
+
+	SYS_CNY
+	SYS_USD
+	SYS_BTC
+
+	DASH_CNY
+	DASH_USD
+	DASH_BTC
+
+	YBC_CNY
+	YBC_USD
+	YBC_BTC
+
+	XCN_BTC
 )
 
 const
@@ -150,3 +550,6 @@ var
 	QUARTER_CONTRACT = "quarter"; //季度合约
 )
 
+func SymbolPairCurrency(sss string) int {
+	return 0
+}
