@@ -20,6 +20,7 @@ const (
 	TRADE_API      = BASE_URL + "tradingApi"
 	PUBLIC_URL     = BASE_URL + "public"
 	TICKER_API     = "?command=returnTicker"
+	CURRENCIES_API = "?command=returnCurrencies"
 	ORDER_BOOK_API = "?command=returnOrderBook&currencyPair=%s&depth=%d"
 )
 
@@ -486,6 +487,46 @@ func (p *Poloniex) Withdraw(amount string, currency Currency, fees, receiveAddr,
 	return "", errors.New(string(resp))
 }
 
+func (p *Poloniex) WithdrawWithMemo(amount string, currency Currency, paymentId, receiveAddr, safePwd string) (string, error) {
+	params := url.Values{}
+	params.Add("command", "withdraw")
+	params.Add("address", receiveAddr)
+	params.Add("amount", amount)
+	params.Add("currency", strings.ToUpper(currency.String()));
+	params.Add("paymentId", paymentId);
+
+	sign, err := p.buildPostForm(&params)
+	if err != nil {
+		return "", err
+	}
+
+	headers := map[string]string{
+		"Key":  p.accessKey,
+		"Sign": sign}
+
+	resp, err := HttpPostForm2(p.client, TRADE_API, params, headers)
+
+	if err != nil {
+		log.Println(err)
+		return "", err
+	}
+	println(string(resp))
+
+	respMap := make(map[string]interface{})
+
+	err = json.Unmarshal(resp, &respMap)
+	if err != nil {
+		log.Println(err)
+		return "", err
+	}
+
+	if respMap["error"] == nil {
+		return string(resp), nil
+	}
+
+	return "", errors.New(string(resp))
+}
+
 type PoloniexDepositsWithdrawals struct {
 	Deposits    []struct {
 		Currency      string    `json:"currency"`
@@ -572,4 +613,27 @@ func (poloniex *Poloniex) MarketBuy(amount, price string, currency CurrencyPair)
 
 func (poloniex *Poloniex) MarketSell(amount, price string, currency CurrencyPair) (*Order, error) {
 	panic("unsupport the market order")
+}
+
+func (poloniex *Poloniex) GetCurrency(currency Currency) (*PoloniexCurrency, error) {
+	respmap, err := HttpGet(poloniex.client, PUBLIC_URL + CURRENCIES_API)
+
+	if err != nil || respmap["error"] != nil {
+		log.Println(err)
+		return nil, err
+	}
+
+	currencyMap := respmap[strings.ToUpper(currency.String())].(map[string]interface{})
+
+	poloniexCurrency := new(PoloniexCurrency)
+	poloniexCurrency.ID = int(currencyMap["id"].(float64))
+	poloniexCurrency.Name, _ = currencyMap["name"].(string)
+	poloniexCurrency.TxFee, _ = strconv.ParseFloat(currencyMap["txFee"].(string), 64)
+	poloniexCurrency.MinConf = int(currencyMap["minConf"].(float64))
+	poloniexCurrency.DepositAddress, _ = currencyMap["depositAddress"].(string)
+	poloniexCurrency.Disabled = int(currencyMap["disabled"].(float64))
+	poloniexCurrency.Delisted = int(currencyMap["delisted"].(float64))
+	poloniexCurrency.Frozen = int(currencyMap["frozen"].(float64))
+
+	return poloniexCurrency, nil
 }

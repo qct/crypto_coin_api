@@ -15,7 +15,7 @@ func (c Currency) String() string {
 	if c == 0 {
 		return "nil"
 	}
-	return currencySymbol[c - 1];
+	return currencySymbol[c];
 }
 
 type TradeSide int;
@@ -41,7 +41,124 @@ func (ts TradeStatus) String() string {
 	return orderStatusSymbol[ts];
 }
 
-var currencySymbol = [...]string{"cny", "usd", "btc", "ltc", "eth", "etc", "zec", "sc"};
+var currencySymbol = map[Currency]string{
+	CNY: "cny",
+	USD: "usd",
+	BTC: "btc",
+
+	BLK: "blk",
+	BTCD: "btcd",
+	BTS: "bts",
+	BURST: "burst",
+	CLAM: "clam",
+	DASH: "dash",
+	DGB: "dgb",
+	DOGE: "doge",
+	EMC2: "emc2",
+	FLDC: "fldc",
+	FLO: "flo",
+	GAME: "game",
+	GRC: "grc",
+	LTC: "ltc",
+	MAID: "maid",
+	OMNI: "omni",
+	NAUT: "naut",
+	NAV: "nav",
+	NEOS: "neos",
+	NXT: "nxt",
+	PINK: "pink",
+	POT: "pot",
+	PPC: "ppc",
+	SJCX: "sjcx",
+	SYS: "sys",
+	VIA: "via",
+	XVC: "xvc",
+	VRC: "vrc",
+	VTC: "vtc",
+	XCP: "xcp",
+	XEM: "xem",
+	XMR: "xmr",
+	XRP: "xrp",
+	ETH: "eth",
+	SC: "sc",
+	BCY: "bcy",
+	EXP: "exp",
+	FCT: "fct",
+	RADS: "rads",
+	AMP: "amp",
+	DCR: "dcr",
+	LSK: "lsk",
+	LBC: "lbc",
+	STEEM: "steem",
+	SBD: "sbd",
+	ETC: "etc",
+	REP: "rep",
+	ARDR: "ardr",
+	ZEC: "zec",
+	STRAT: "strat",
+	NXC: "nxc",
+	GNT: "gnt",
+	GNO: "gno",
+}
+var SymbolCurrency = map[string]Currency{
+	"CNY": CNY,
+	"USD": USD,
+	"BTC": BTC,
+
+	"BLK": BLK,
+	"BTCD": BTCD,
+	"BTS": BTS,
+	"BURST": BURST,
+	"CLAM": CLAM,
+	"DASH": DASH,
+	"DGB": DGB,
+	"DOGE": DOGE,
+	"EMC2": EMC2,
+	"FLDC": FLDC,
+	"FLO": FLO,
+	"GAME": GAME,
+	"GRC": GRC,
+	"LTC": LTC,
+	"MAID": MAID,
+	"OMNI": OMNI,
+	"NAUT": NAUT,
+	"NAV": NAV,
+	"NEOS": NEOS,
+	"NXT": NXT,
+	"PINK": PINK,
+	"POT": POT,
+	"PPC": PPC,
+	"SJCX": SJCX,
+	"SYS": SYS,
+	"VIA": VIA,
+	"XVC": XVC,
+	"VRC": VRC,
+	"VTC": VTC,
+	"XCP": XCP,
+	"XEM": XEM,
+	"XMR": XMR,
+	"XRP": XRP,
+	"ETH": ETH,
+	"SC": SC,
+	"BCY": BCY,
+	"EXP": EXP,
+	"FCT": FCT,
+	"RADS": RADS,
+	"AMP": AMP,
+	"DCR": DCR,
+	"LSK": LSK,
+	"LBC": LBC,
+	"STEEM": STEEM,
+	"SBD": SBD,
+	"ETC": ETC,
+	"REP": REP,
+	"ARDR": ARDR,
+	"ZEC": ZEC,
+	"STRAT": STRAT,
+	"NXC": NXC,
+	"GNT": GNT,
+	"GNO": GNO,
+}
 
 const
 (
@@ -571,7 +688,8 @@ var CurrencyPairSymbol = map[CurrencyPair]string{
 	ETC_CNY : "etc_cny",
 	ETC_USD : "etc_usd",
 	ETC_BTC : "etc_btc",
-	ETC_ETH : "etc_eth"};
+	ETC_ETH : "etc_eth",
+	BTS_CNY : "bts_cny"};
 
 var
 (

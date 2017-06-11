@@ -138,3 +138,14 @@ type FuturePosition struct {
 	ContractId     int64;
 	ForceLiquPrice float64;      //预估爆仓价
 }
+
+type PoloniexCurrency struct {
+	ID       int `json:"id"`;
+	Name     string `json:"name"`;
+	TxFee    float64 `json:"txFee"`;
+	MinConf  int `json:"minConf"`;
+	DepositAddress  string `json:"depositAddress"`;
+	Disabled int `json:"disabled"`;
+	Delisted int `json:"delisted"`;
+	Frozen   int `json:"frozen"`;
+}
