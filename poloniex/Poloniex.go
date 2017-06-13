@@ -431,6 +431,8 @@ func (poloniex *Poloniex) GetAccount() (*Account, error) {
 			currency = ETC
 		case "USD":
 			currency = USD
+		case "BTS":
+			currency = BTS
 		default:
 			currency = -1
 		}
