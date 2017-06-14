@@ -183,6 +183,11 @@ func (chbtc *Chbtc) GetAccount() (*Account, error) {
 			etcfrozen := frozenmap["ETC"].(map[string]interface{});
 			subAcc.ForzenAmount = etcfrozen["amount"].(float64);
 			subAcc.LoanAmount = p2pmap["inETC"].(float64);
+		case "BTS":
+			subAcc.Currency = BTS;
+			btsfrozen := frozenmap["BTS"].(map[string]interface{});
+			subAcc.ForzenAmount = btsfrozen["amount"].(float64);
+			subAcc.LoanAmount = p2pmap["inBTS"].(float64);
 		default:
 			log.Println("unknown ", t);
 
