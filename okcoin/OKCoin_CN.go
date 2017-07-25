@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	. "github.com/qct/crypto_coin_api"
+	"sort"
 )
 
 const (
@@ -381,6 +382,7 @@ func (ctx *OKCoinCN_API) GetDepth(size int, currency CurrencyPair) (*Depth, erro
 		depth.BidList = append(depth.BidList, dr)
 	}
 
+	sort.Sort(depth.AskList)
 	return &depth, nil
 }
 

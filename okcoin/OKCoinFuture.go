@@ -11,6 +11,7 @@ import (
 	"strings"
 	"errors"
 	"log"
+	"sort"
 )
 
 const (
@@ -208,6 +209,7 @@ func (ok *OKCoinFuture) GetFutureDepth(currencyPair CurrencyPair, contractType s
 		}
 	}
 
+	sort.Sort(depth.AskList)
 	//fmt.Println(bodyMap)
 	return depth, nil
 }
