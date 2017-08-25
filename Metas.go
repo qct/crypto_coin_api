@@ -51,7 +51,7 @@ type Ticker struct {
 }
 
 type DepthRecord struct {
-    Price,
+    Price  float64
     Amount float64
 }
 
@@ -70,7 +70,7 @@ func (dr DepthRecords) Less(i, j int) bool {
 }
 
 type Depth struct {
-    AskList,
+    AskList DepthRecords
     BidList DepthRecords
 }
 
@@ -83,11 +83,11 @@ type APIConfig struct {
 
 type Kline struct {
     Timestamp int64
-    Open,
-    Close,
-    High,
-    Low,
-    Vol float64
+    Open      float64
+    Close     float64
+    High      float64
+    Low       float64
+    Vol       float64
 }
 
 type FutureKline struct {
