@@ -11,6 +11,7 @@ import (
 	"encoding/json"
 	"strings"
 	"errors"
+    "sort"
 )
 
 const
@@ -97,6 +98,7 @@ func (chbtc *Chbtc) GetDepth(size int, currency CurrencyPair) (*Depth, error) {
 		depth.AskList = append(depth.AskList, r);
 	}
 
+	sort.Sort(depth.AskList)
 	return depth, nil;
 }
 
