@@ -691,6 +691,22 @@ var CurrencyPairSymbol = map[CurrencyPair]string{
     ETC_ETH: "etc_eth",
     BTS_CNY: "bts_cny"}
 
+var SymbolCurrencyPair = map[string]CurrencyPair{
+    "btc_cny": BTC_CNY,
+    "btc_usd": BTC_USD,
+    "ltc_cny": LTC_CNY,
+    "ltc_usd": LTC_USD,
+    "ltc_btc": LTC_BTC,
+    "eth_cny": ETH_CNY,
+    "eth_usd": ETH_USD,
+    "eth_btc": ETH_BTC,
+    "etc_cny": ETC_CNY,
+    "etc_usd": ETC_USD,
+    "etc_btc": ETC_BTC,
+    "etc_eth": ETC_ETH,
+    "bts_cny": BTS_CNY,
+}
+
 var
 (
     THIS_WEEK_CONTRACT = "this_week" //周合约
