@@ -17,7 +17,7 @@ import (
 const (
 	FUTURE_API_BASE_URL    = "https://www.okex.com/api/v1/"
 	FUTURE_TICKER_URI      = "future_ticker.do?symbol=%s&contract_type=%s"
-	FUTURE_DEPTH_URI       = "future_depth.do?symbol=%s&contract_type=%s"
+	FUTURE_DEPTH_URI       = "future_depth.do?symbol=%s&contract_type=%s&size=%d"
 	FUTURE_USERINFO_URI    = "future_userinfo.do"
 	FUTURE_CANCEL_URI      = "future_cancel.do"
 	FUTURE_ORDER_INFO_URI  = "future_order_info.do"
@@ -138,8 +138,7 @@ func (ok *OKCoinFuture) GetFutureTicker(currencyPair CurrencyPair, contractType 
 
 func (ok *OKCoinFuture) GetFutureDepth(currencyPair CurrencyPair, contractType string , size int) (*Depth, error) {
 	url := FUTURE_API_BASE_URL + FUTURE_DEPTH_URI
-	//fmt.Println(fmt.Sprintf(url, CurrencyPairSymbol[currencyPair], contractType));
-	resp, err := ok.client.Get(fmt.Sprintf(url, CurrencyPairSymbol[currencyPair], contractType))
+	resp, err := ok.client.Get(fmt.Sprintf(url, CurrencyPairSymbol[currencyPair], contractType, size))
 	if err != nil {
 		return nil, err
 	}
@@ -151,8 +150,6 @@ func (ok *OKCoinFuture) GetFutureDepth(currencyPair CurrencyPair, contractType s
 	if err != nil {
 		return nil, err
 	}
-
-	//println(string(body))
 
 	bodyMap := make(map[string]interface{})
 
@@ -167,18 +164,7 @@ func (ok *OKCoinFuture) GetFutureDepth(currencyPair CurrencyPair, contractType s
 	}
 
 	depth := new(Depth)
-	size2 := len(bodyMap["asks"].([]interface{}))
-	skipSize := 0;
-	if size < size2 {
-		skipSize = size2 - size;
-	}
-
 	for _, v := range bodyMap["asks"].([]interface{}) {
-		if skipSize > 0 {
-			skipSize --;
-			continue;
-		}
-
 		var dr DepthRecord
 		for i, vv := range v.([]interface{}) {
 			switch i {
@@ -202,15 +188,9 @@ func (ok *OKCoinFuture) GetFutureDepth(currencyPair CurrencyPair, contractType s
 			}
 		}
 		depth.BidList = append(depth.BidList, dr)
-
-		size--;
-		if size == 0 {
-			break;
-		}
 	}
 
 	sort.Sort(depth.AskList)
-	//fmt.Println(bodyMap)
 	return depth, nil
 }
 
