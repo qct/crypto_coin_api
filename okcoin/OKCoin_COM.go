@@ -28,7 +28,7 @@ func (ctx *OKCoinCOM_API) GetAccount() (*Account, error) {
 		return nil, err
 	}
 
-	body, err := HttpPostForm(ctx.client, ctx.api_base_url+url_userinfo, postData)
+	body, err := HttpPostForm(ctx.client, ctx.api_base_url+URL_USERINFO, postData)
 	if err != nil {
 		return nil, err
 	}
