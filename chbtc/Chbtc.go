@@ -140,67 +140,56 @@ func (chbtc *Chbtc) GetAccount() (*Account, error) {
 		return nil, errors.New(string(resp))
 	}
 
-	acc := new(Account);
-	acc.Exchange = "chbtc";
-	acc.SubAccounts = make(map[Currency]SubAccount);
+	acc := new(Account)
+	acc.Exchange = "chbtc"
+	acc.SubAccounts = make(map[Currency]SubAccount)
 
-	resultmap := respmap["result"].(map[string]interface{});
-	balancemap := resultmap["balance"].(map[string]interface{});
-	frozenmap := resultmap["frozen"].(map[string]interface{});
-	p2pmap := resultmap["p2p"].(map[string]interface{});
-	netAssets := resultmap["netAssets"].(float64);
-	asset := resultmap["totalAssets"].(float64);
+	resultmap := respmap["result"].(map[string]interface{})
+	balancemap := resultmap["balance"].(map[string]interface{})
+	frozenmap := resultmap["frozen"].(map[string]interface{})
+	p2pmap := resultmap["p2p"].(map[string]interface{})
 
-	acc.NetAsset = netAssets;
-	acc.Asset = asset;
+	acc.NetAsset = ToFloat64(resultmap["netAssets"])
+	acc.Asset = ToFloat64(resultmap["totalAssets"])
 
 	for t, v := range balancemap {
-		vv := v.(map[string]interface{});
-		subAcc := SubAccount{};
-		subAcc.Amount = vv["amount"].(float64);
+		vv := v.(map[string]interface{})
+		frozen := frozenmap["CNY"].(map[string]interface{})
+		subAcc := SubAccount{}
+		subAcc.Amount = ToFloat64(vv["amount"])
+		subAcc.ForzenAmount = ToFloat64(frozen["amount"])
+		subAcc.LoanAmount = ToFloat64(p2pmap[fmt.Sprintf("in%s", t)])
 
 		switch t {
 		case "CNY":
-			subAcc.Currency = CNY;
-			cnyfrozen := frozenmap["CNY"].(map[string]interface{});
-			subAcc.ForzenAmount = cnyfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inCNY"].(float64);
+			subAcc.Currency = CNY
 		case "BTC":
-			subAcc.Currency = BTC;
-			btcfrozen := frozenmap["BTC"].(map[string]interface{});
-			subAcc.ForzenAmount = btcfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inBTC"].(float64);
+			subAcc.Currency = BTC
 		case "LTC":
-			subAcc.Currency = LTC;
-			ltcfrozen := frozenmap["LTC"].(map[string]interface{});
-			subAcc.ForzenAmount = ltcfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inLTC"].(float64);
+			subAcc.Currency = LTC
 		case "ETH":
-			subAcc.Currency = ETH;
-			ethfrozen := frozenmap["ETH"].(map[string]interface{});
-			subAcc.ForzenAmount = ethfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inETH"].(float64);
+			subAcc.Currency = ETH
 		case "ETC":
-			subAcc.Currency = ETC;
-			etcfrozen := frozenmap["ETC"].(map[string]interface{});
-			subAcc.ForzenAmount = etcfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inETC"].(float64);
+			subAcc.Currency = ETC
 		case "BTS":
-			subAcc.Currency = BTS;
-			btsfrozen := frozenmap["BTS"].(map[string]interface{});
-			subAcc.ForzenAmount = btsfrozen["amount"].(float64);
-			subAcc.LoanAmount = p2pmap["inBTS"].(float64);
+			subAcc.Currency = BTS
+		case "EOS":
+			subAcc.Currency = EOS
+		case "BCC":
+			subAcc.Currency = BCC
+		case "QTUM":
+			subAcc.Currency = QTUM
 		default:
-			log.Println("unknown ", t);
+			log.Println("unknown ", t)
 
 		}
-		acc.SubAccounts[subAcc.Currency] = subAcc;
+		acc.SubAccounts[subAcc.Currency] = subAcc
 	}
 
 	//log.Println(string(resp))
 	//log.Println(acc)
 
-	return acc, nil;
+	return acc, nil
 }
 
 func (chbtc *Chbtc) placeOrder(amount, price string, currency CurrencyPair, tradeType int) (*Order, error) {

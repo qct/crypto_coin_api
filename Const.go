@@ -491,6 +491,8 @@ const
     PINK
     //	PPC
     XPB
+    EOS
+    QTUM
 )
 
 var currencyPairSymbol = [...]string{"btc_cny", "btc_usd", "btc_jpy", "fx_btc_jpy", "ltc_cny", "ltc_usd", "ltc_btc", "eth_cny",
