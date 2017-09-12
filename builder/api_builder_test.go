@@ -3,17 +3,18 @@ package builder
 import (
     "github.com/stretchr/testify/assert"
     "testing"
+    "github.com/qct/crypto_coin_api"
 )
 
-var builder = NewApiBuilder()
+var b = NewApiBuilder()
 
-func TestAPIBuilder_Build(t *testing.T) {
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("okcoin.cn").GetExchangeName(), "okcoin.cn")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("okcoin.com").GetExchangeName(), "okcoin.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("huobi.com").GetExchangeName(), "huobi.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("chbtc.com").GetExchangeName(), "chbtc.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("yunbi.com").GetExchangeName(), "yunbi.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("poloniex.com").GetExchangeName(), "poloniex.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("coincheck.com").GetExchangeName(), "coincheck.com")
-    assert.Equal(t, builder.APIKey("").APISecretkey("").Build("zaif.jp").GetExchangeName(), "zaif.jp")
+func TestApiBuilder_Build(t *testing.T) {
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.OK_CN).GetExchangeName(), "okcoin.cn")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.OK_COM).GetExchangeName(), "okcoin.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.HUOBI).GetExchangeName(), "huobi.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.CHBTC).GetExchangeName(), "chbtc.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.YUNBI).GetExchangeName(), "yunbi.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.POLONIEX).GetExchangeName(), "poloniex.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.COIN_CHECK).GetExchangeName(), "coincheck.com")
+    assert.Equal(t, b.ApiKey("").ApiSecretkey("").Build(coinapi.ZAIF).GetExchangeName(), "zaif.jp")
 }
