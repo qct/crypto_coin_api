@@ -13,7 +13,7 @@ const (
 )
 
 const (
-    ORDER_UNFINISHED  = iota
+    ORDER_UNFINISHED  = iota + 1
     ORDER_PART_FINISH
     ORDER_FINISH
     ORDER_CANCEL
@@ -44,13 +44,26 @@ const (
 
 type TradeStatus int
 
-func (ts TradeStatus) String() string {
-    return tradeStatusSymbol[ts]
-}
-
-var tradeStatusSymbol = []string{"UNFINISH", "PART_FINISH", "FINISH", "CANCEL", "REJECT", "CANCEL_ING"}
-
 type TradeSide int
+
+func (ts TradeStatus) String() string {
+    switch ts {
+    case ORDER_UNFINISHED:
+        return "UNFINISH"
+    case ORDER_PART_FINISH:
+        return "PART_FINISH"
+    case ORDER_FINISH:
+        return "FINISH"
+    case ORDER_CANCEL:
+        return "CANCEL"
+    case ORDER_REJECT:
+        return "REJECT"
+    case ORDER_CANCELING:
+        return "CANCEL_ING"
+    default:
+        return "UNKNOWN"
+    }
+}
 
 func (ts TradeSide) String() string {
     switch ts {
