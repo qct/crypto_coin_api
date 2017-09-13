@@ -1,4 +1,5 @@
 package zaif
+
 //
 //import (
 //	"fmt"

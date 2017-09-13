@@ -1,4 +1,5 @@
 package zaif
+
 //
 //import (
 //	"github.com/qct/crypto_coin_api"

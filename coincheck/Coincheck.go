@@ -1,4 +1,5 @@
 package coincheck
+
 //
 //import (
 //	"fmt"

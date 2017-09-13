@@ -1,4 +1,5 @@
 package okcoin
+
 //
 //import (
 //	"encoding/json"

@@ -1,34 +1,34 @@
 package coinapi
 
 type Api interface {
-    GetDepth(cp CurrencyPairV2, size int) (*Depth, error)
+	GetDepth(cp CurrencyPair, size int) (*Depth, error)
 
-    LimitBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+	LimitBuy(amount, price string, cp CurrencyPair) (*Order, error)
 
-    LimitSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+	LimitSell(amount, price string, cp CurrencyPair) (*Order, error)
 
-    MarketBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+	MarketBuy(amount, price string, cp CurrencyPair) (*Order, error)
 
-    MarketSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+	MarketSell(amount, price string, cp CurrencyPair) (*Order, error)
 
-    CancelOrder(orderId string, cp CurrencyPairV2) (bool, error)
+	CancelOrder(orderId string, cp CurrencyPair) (bool, error)
 
-    GetOneOrder(orderId string, cp CurrencyPairV2) (*OrderV2, error)
+	GetOneOrder(orderId string, cp CurrencyPair) (*Order, error)
 
-    GetUnfinishedOrders(cp CurrencyPairV2) ([]OrderV2, error)
+	GetUnfinishedOrders(cp CurrencyPair) ([]Order, error)
 
-    GetAccount() (*AccountV2, error)
+	GetAccount() (*Account, error)
 
-    GetTicker(cp CurrencyPairV2) (*Ticker, error)
+	GetTicker(cp CurrencyPair) (*Ticker, error)
 
-    Withdraw(amount, currency, fees, receiveAddr, memo, safePwd string) (string, error)
+	Withdraw(amount, currency, fees, receiveAddr, memo, safePwd string) (string, error)
 
-    GetExchangeName() string
+	GetExchangeName() string
 
-    GetKlineRecords(cp CurrencyPairV2, period string, size, since int) ([]Kline, error)
+	GetKlineRecords(cp CurrencyPair, period string, size, since int) ([]Kline, error)
 
-    GetOrderHistory(cp CurrencyPairV2, currentPage, pageSize int) ([]OrderV2, error)
+	GetOrderHistory(cp CurrencyPair, currentPage, pageSize int) ([]Order, error)
 
-    //非个人，整个交易所的交易记录
-    GetTrades(cp CurrencyPairV2, since int64) ([]Trade, error)
+	//非个人，整个交易所的交易记录
+	GetTrades(cp CurrencyPair, since int64) ([]Trade, error)
 }
