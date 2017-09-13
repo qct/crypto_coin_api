@@ -52,12 +52,12 @@ type PoloApi struct {
     client *http.Client
 }
 
-func NewPoloApi(client *http.Client, accessKey, secretKey string) *PoloApi {
+func New(client *http.Client, accessKey, secretKey string) *PoloApi {
     return &PoloApi{accessKey, secretKey, client}
 }
 
 func (p *PoloApi) GetDepth(cp CurrencyPairV2, size int) (*Depth, error) {
-    resp, err := HttpGet(p.client, PUBLIC_URL+fmt.Sprintf(ORDER_BOOK_API, combineCurrencyPair(cp), size))
+    resp, err := HttpGet(p.client, PUBLIC_URL+fmt.Sprintf(ORDER_BOOK_API, cp.Symbol(), size))
     if err != nil {
         log.Println(err)
         return nil, err
@@ -100,11 +100,19 @@ func (p *PoloApi) GetDepth(cp CurrencyPairV2, size int) (*Depth, error) {
 }
 
 func (p *PoloApi) LimitBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
-    return p.placeLimitOrder("buy", amount, price, cp)
+    return p.placeLimitOrder(BUY, amount, price, cp)
 }
 
 func (p *PoloApi) LimitSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
-    return p.placeLimitOrder("sell", amount, price, cp)
+    return p.placeLimitOrder(SELL, amount, price, cp)
+}
+
+func (p *PoloApi) MarketBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
+    return &OrderV2{}, nil
+}
+
+func (p *PoloApi) MarketSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
+    return &OrderV2{}, nil
 }
 
 func (p *PoloApi) CancelOrder(orderId string, cp CurrencyPairV2) (bool, error) {
@@ -180,7 +188,7 @@ func (p *PoloApi) GetOneOrder(orderId string, cp CurrencyPairV2) (*OrderV2, erro
 
     order := new(OrderV2)
     order.OrderID, _ = strconv.Atoi(orderId)
-    order.CurrencyPair = combineCurrencyPair(cp)
+    order.CurrencyPair = cp.Symbol()
 
     total := 0.0
     for _, v := range respMap {
@@ -206,7 +214,7 @@ func (p *PoloApi) GetOneOrder(orderId string, cp CurrencyPairV2) (*OrderV2, erro
 func (p *PoloApi) GetUnfinishedOrders(cp CurrencyPairV2) ([]OrderV2, error) {
     postData := url.Values{}
     postData.Set("command", "returnOpenOrders")
-    postData.Set("currencyPair", combineCurrencyPair(cp))
+    postData.Set("currencyPair", cp.Symbol())
 
     sign, err := p.buildPostForm(&postData)
     if err != nil {
@@ -234,11 +242,11 @@ func (p *PoloApi) GetUnfinishedOrders(cp CurrencyPairV2) ([]OrderV2, error) {
     for _, v := range orderAr {
         vv := v.(map[string]interface{})
         order := OrderV2{}
-        order.CurrencyPair = combineCurrencyPair(cp)
+        order.CurrencyPair = cp.Symbol()
         order.OrderID, _ = strconv.Atoi(vv["orderNumber"].(string))
         order.Amount, _ = strconv.ParseFloat(vv["amount"].(string), 64)
         order.Price, _ = strconv.ParseFloat(vv["rate"].(string), 64)
-        order.Status = ORDER_UNFINISH
+        order.Status = ORDER_UNFINISHED
 
         side := vv["type"].(string)
         switch side {
@@ -297,7 +305,7 @@ func (p *PoloApi) GetTicker(cp CurrencyPairV2) (*Ticker, error) {
         log.Println(err)
         return nil, err
     }
-    tickerMap := resp[combineCurrencyPair(cp)].(map[string]interface{})
+    tickerMap := resp[cp.Symbol()].(map[string]interface{})
     ticker := new(Ticker)
     ticker.High, _ = strconv.ParseFloat(tickerMap["high24hr"].(string), 64)
     ticker.Low, _ = strconv.ParseFloat(tickerMap["low24hr"].(string), 64)
@@ -360,14 +368,6 @@ func (p *PoloApi) GetOrderHistory(cp CurrencyPairV2, currentPage, pageSize int) 
 
 func (p *PoloApi) GetTrades(cp CurrencyPairV2, since int64) ([]Trade, error) {
     return []Trade{}, nil
-}
-
-func (p *PoloApi) MarketBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
-    return &OrderV2{}, nil
-}
-
-func (p *PoloApi) MarketSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
-    return &OrderV2{}, nil
 }
 
 //-------------------------
@@ -461,10 +461,10 @@ func (p *PoloApi) GetAllCurrencies() (map[string]*PoloniexCurrency, error) {
 
 //-------------------------
 
-func (p *PoloApi) placeLimitOrder(command, amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
+func (p *PoloApi) placeLimitOrder(command TradeSide, amount, price string, cp CurrencyPairV2) (*OrderV2, error) {
     postData := url.Values{}
-    postData.Set("command", command)
-    postData.Set("currencyPair", combineCurrencyPair(cp))
+    postData.Set("command", strings.ToLower(command.String()))
+    postData.Set("currencyPair", cp.Symbol())
     postData.Set("rate", price)
     postData.Set("amount", amount)
     sign, _ := p.buildPostForm(&postData)
@@ -491,17 +491,9 @@ func (p *PoloApi) placeLimitOrder(command, amount, price string, cp CurrencyPair
     order.OrderID, _ = strconv.Atoi(orderNumber)
     order.Amount, _ = strconv.ParseFloat(amount, 64)
     order.Price, _ = strconv.ParseFloat(price, 64)
-    order.Status = ORDER_UNFINISH
-    order.CurrencyPair = combineCurrencyPair(cp)
-
-    switch command {
-    case "sell":
-        order.Side = SELL
-    case "buy":
-        order.Side = BUY
-    }
-
-    log.Println(string(resp))
+    order.Status = ORDER_UNFINISHED
+    order.CurrencyPair = cp.Symbol()
+    order.Side = command
     return order, nil
 }
 
@@ -513,11 +505,4 @@ func (p *PoloApi) buildPostForm(postForm *url.Values) (string, error) {
         return "", err
     }
     return sign, nil
-}
-
-func combineCurrencyPair(cp CurrencyPairV2) string {
-    if cp.BaseCurrency == "" {
-        cp.BaseCurrency = "BTC"
-    }
-    return strings.ToUpper(string(cp.BaseCurrency)) + "_" + strings.ToUpper(string(cp.CounterCurrency))
 }

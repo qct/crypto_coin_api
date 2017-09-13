@@ -4,12 +4,8 @@ import (
     "context"
     . "github.com/qct/crypto_coin_api"
     "github.com/qct/crypto_coin_api/chbtc"
-    "github.com/qct/crypto_coin_api/coincheck"
-    "github.com/qct/crypto_coin_api/huobi"
     "github.com/qct/crypto_coin_api/okcoin"
     "github.com/qct/crypto_coin_api/poloniex"
-    "github.com/qct/crypto_coin_api/yunbi"
-    "github.com/qct/crypto_coin_api/zaif"
     "log"
     "net"
     "net/http"
@@ -23,30 +19,30 @@ type ApiBuilder struct {
     secretKey   string
 }
 
-func NewApiBuilder() (builder *ApiBuilder) {
-    _client := http.DefaultClient
+func NewApiBuilder() *ApiBuilder {
+    client := http.DefaultClient
     transport := &http.Transport{
         MaxIdleConns:    10,
         IdleConnTimeout: 4 * time.Second,
     }
-    _client.Transport = transport
-    return &ApiBuilder{client: _client}
+    client.Transport = transport
+    return &ApiBuilder{client: client}
 }
 
-func (builder *ApiBuilder) ApiKey(key string) (_builder *ApiBuilder) {
-    builder.apiKey = key
-    return builder
+func (b *ApiBuilder) ApiKey(key string) *ApiBuilder {
+    b.apiKey = key
+    return b
 }
 
-func (builder *ApiBuilder) ApiSecretkey(key string) (_builder *ApiBuilder) {
-    builder.secretKey = key
-    return builder
+func (b *ApiBuilder) ApiSecretKey(key string) *ApiBuilder {
+    b.secretKey = key
+    return b
 }
 
-func (builder *ApiBuilder) HttpTimeout(timeout time.Duration) (_builder *ApiBuilder) {
-    builder.httpTimeout = timeout
-    builder.client.Timeout = timeout
-    transport := builder.client.Transport.(*http.Transport)
+func (b *ApiBuilder) HttpTimeout(timeout time.Duration) *ApiBuilder {
+    b.httpTimeout = timeout
+    b.client.Timeout = timeout
+    transport := b.client.Transport.(*http.Transport)
     if transport != nil {
         transport.ResponseHeaderTimeout = timeout
         transport.TLSHandshakeTimeout = timeout
@@ -54,27 +50,37 @@ func (builder *ApiBuilder) HttpTimeout(timeout time.Duration) (_builder *ApiBuil
             return net.DialTimeout(network, addr, timeout)
         }
     }
-    return builder
+    return b
 }
 
-func (builder *ApiBuilder) Build(exName string) (api Api) {
+func (b *ApiBuilder) Build(exName string) (api Api) {
     switch exName {
     case OK_CN:
-        api = okcoin.New(builder.client, builder.apiKey, builder.secretKey)
-    case HUOBI:
-        api = huobi.New(builder.client, builder.apiKey, builder.secretKey)
+        api = okcoin.NewOkCNApi(b.client, b.apiKey, b.secretKey)
     case CHBTC:
-        api = chbtc.New(builder.client, builder.apiKey, builder.secretKey)
-    case YUNBI:
-        api = yunbi.New(builder.client, builder.apiKey, builder.secretKey)
+        api = chbtc.NewApi(b.client, b.apiKey, b.secretKey)
     case POLONIEX:
-        api = poloniex.NewPoloApi(builder.client, builder.apiKey, builder.secretKey)
-    case OK_COM:
-        api = okcoin.NewCOM(builder.client, builder.apiKey, builder.secretKey)
-    case COIN_CHECK:
-        api = coincheck.New(builder.client, builder.apiKey, builder.secretKey)
-    case ZAIF:
-        api = zaif.New(builder.client, builder.apiKey, builder.secretKey)
+        api = poloniex.New(b.client, b.apiKey, b.secretKey)
+        //case OK_COM:
+        //    api = okcoin.NewCOM(b.client, b.apiKey, b.secretKey)
+        //case COIN_CHECK:
+        //    api = coincheck.New(b.client, b.apiKey, b.secretKey)
+        //case ZAIF:
+        //    api = zaif.New(b.client, b.apiKey, b.secretKey)
+        //    api = yunbi.New(b.client, b.apiKey, b.secretKey)
+        //case YUNBI:
+        //    api = huobi.New(b.client, b.apiKey, b.secretKey)
+        //case HUOBI:
+    default:
+        log.Println("error")
+    }
+    return api
+}
+
+func (b *ApiBuilder) BuildFutureApi(exName string) (api FutureApi) {
+    switch exName {
+    case OK_EX:
+        api = okcoin.NewOkExApi(b.client, b.apiKey, b.secretKey)
     default:
         log.Println("error")
     }

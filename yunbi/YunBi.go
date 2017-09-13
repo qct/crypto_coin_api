@@ -332,7 +332,7 @@ package yunbi
 //}
 //
 //func (yunbi *YunBi) GetTrades(currencyPair CurrencyPair, since int64) ([]Trade, error) {
-//	panic("unimplements")
+//	panic("unsupported")
 //}
 //
 //func (yunbi *YunBi)parseOrder(orderMap map[string]interface{}) Order {

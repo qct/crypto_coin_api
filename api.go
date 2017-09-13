@@ -7,6 +7,10 @@ type Api interface {
 
     LimitSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
 
+    MarketBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+
+    MarketSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
+
     CancelOrder(orderId string, cp CurrencyPairV2) (bool, error)
 
     GetOneOrder(orderId string, cp CurrencyPairV2) (*OrderV2, error)
@@ -27,8 +31,4 @@ type Api interface {
 
     //非个人，整个交易所的交易记录
     GetTrades(cp CurrencyPairV2, since int64) ([]Trade, error)
-
-    MarketBuy(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
-
-    MarketSell(amount, price string, cp CurrencyPairV2) (*OrderV2, error)
 }

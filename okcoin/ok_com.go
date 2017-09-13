@@ -17,8 +17,8 @@ package okcoin
 //	OKCoinCN_API
 //}
 //
-//func NewCOM(client *http.Client, api_key, secret_key string) *OKCoinCOM_API {
-//	return &OKCoinCOM_API{OKCoinCN_API{client, api_key, secret_key, "https://www.okcoin.com/api/v1/"}}
+//func NewCOM(client *http.Client, apiKey, secretKey string) *OKCoinCOM_API {
+//	return &OKCoinCOM_API{OKCoinCN_API{client, apiKey, secretKey, "https://www.okcoin.com/api/v1/"}}
 //}
 //
 //func (ctx *OKCoinCOM_API) GetAccount() (*Account, error) {
@@ -28,7 +28,7 @@ package okcoin
 //		return nil, err
 //	}
 //
-//	body, err := HttpPostForm(ctx.client, ctx.api_base_url+URL_USERINFO, postData)
+//	body, err := HttpPostForm(ctx.client, ctx.baseUrl+URL_USERINFO, postData)
 //	if err != nil {
 //		return nil, err
 //	}
