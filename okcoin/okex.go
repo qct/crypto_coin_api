@@ -455,11 +455,11 @@ func (o *OkExApi) parseOrders(body []byte, cp CurrencyPair) ([]FutureOrder, erro
 }
 
 func (o *OkExApi) buildPostForm(postForm *url.Values) error {
-	postForm.Set("apiKey", o.apiKey)
+	postForm.Set("api_key", o.apiKey)
 	//postForm.Set("secretKey", ctx.secretKey)
 
 	payload := postForm.Encode()
-	payload = payload + "&secretKey=" + o.apiSecretKey
+	payload = payload + "&secret_key=" + o.apiSecretKey
 	payload2, _ := url.QueryUnescape(payload) // can't escape for sign
 	sign, err := GetParamMD5Sign(o.apiSecretKey, payload2)
 	if err != nil {
