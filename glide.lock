@@ -1,0 +1,23 @@
+hash: 34b985fc19aebeda1aadd74f0698abd75bc924a543a146f942454140b134efcd
+updated: 2018-08-23T00:14:44.110123+08:00
+imports:
+- name: github.com/qct/crypto_coin_api
+  version: bc1f2cedf8898a19edff97260d51612c9661c140
+  subpackages:
+  - builder
+  - chbtc
+  - okcoin
+  - poloniex
+testImports:
+- name: github.com/davecgh/go-spew
+  version: 8991bc29aa16c548c550c7ff78260e27b9ab7c73
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: 792786c7400a136282c1664665ae0a8db921c6c2
+  subpackages:
+  - difflib
+- name: github.com/stretchr/testify
+  version: f35b8ab0b5a2cef36673838d662e249dd9c94686
+  subpackages:
+  - assert
