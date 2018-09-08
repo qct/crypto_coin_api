@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	. "github.com/qct/crypto_coin_api"
+	. "github.com/qct/cryptocurrency-exchange-api"
 	"log"
 	"net/http"
 	"net/url"

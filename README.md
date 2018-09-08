@@ -4,7 +4,7 @@
 
 ### 教程
 * 第一步安装api库:  
-> go get github.com/qct/crypto_coin_api 
+> go get github.com/qct/cryptocurrency-exchange-api
 * 第二步`import`
 
 ### unit test

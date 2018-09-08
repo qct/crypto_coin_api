@@ -1,6 +1,6 @@
-package: crypto_coin_api
+package: cryptocurrency-exchange-api
 import:
-- package: github.com/qct/crypto_coin_api
+- package: github.com/qct/cryptocurrency-exchange-api
   version: ^2.1.0
   subpackages:
   - chbtc
