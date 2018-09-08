@@ -2,10 +2,10 @@ package builder
 
 import (
 	"context"
-	. "cryptocurrency-exchange-api"
-	"cryptocurrency-exchange-api/chbtc"
-	"cryptocurrency-exchange-api/okcoin"
-	"cryptocurrency-exchange-api/poloniex"
+	. "github.com/qct/cryptocurrency-exchange-api"
+	"github.com/qct/cryptocurrency-exchange-api/chbtc"
+	"github.com/qct/cryptocurrency-exchange-api/okcoin"
+	"github.com/qct/cryptocurrency-exchange-api/poloniex"
 	"log"
 	"net"
 	"net/http"

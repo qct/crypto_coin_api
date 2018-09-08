@@ -1,8 +1,8 @@
 package poloniex
 
 import (
-	"cryptocurrency-exchange-api"
-	"cryptocurrency-exchange-api/builder"
+	"github.com/qct/cryptocurrency-exchange-api"
+	"github.com/qct/cryptocurrency-exchange-api/builder"
 )
 
 func main() {

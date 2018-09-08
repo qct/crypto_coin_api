@@ -1,7 +1,7 @@
 package builder
 
 import (
-	"cryptocurrency-exchange-api"
+	"github.com/qct/cryptocurrency-exchange-api"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

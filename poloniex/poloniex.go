@@ -1,10 +1,10 @@
 package poloniex
 
 import (
-	. "cryptocurrency-exchange-api"
 	"encoding/json"
 	"errors"
 	"fmt"
+	. "github.com/qct/cryptocurrency-exchange-api"
 	"log"
 	"net/http"
 	"net/url"

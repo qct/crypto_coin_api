@@ -2,7 +2,7 @@ package huobi
 
 //
 //import (
-//	. "cryptocurrency-exchange-api"
+//	. "github.com/qct/cryptocurrency-exchange-api"
 //	"io/ioutil"
 //	"errors"
 //	"encoding/json"
