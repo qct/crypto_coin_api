@@ -3,7 +3,7 @@ package coincheck
 //
 //import (
 //	"fmt"
-//	. "github.com/qct/cryptocurrency-exchange-api"
+//	. "cryptocurrency-exchange-api"
 //	"log"
 //	"net/http"
 //	//"strconv"

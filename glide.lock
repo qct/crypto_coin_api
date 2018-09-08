@@ -1,13 +1,6 @@
-hash: af08d3c21aa5850d6e668abd8b8fb48509469e38e254c528286b331572d7ccc7
-updated: 2018-09-08T18:15:22.43384+08:00
-imports:
-- name: github.com/qct/cryptocurrency-exchange-api
-  version: 2398ea3fe7e583e26049a2c23fe07f6f33d46fdd
-  subpackages:
-  - builder
-  - chbtc
-  - okcoin
-  - poloniex
+hash: e03b64d313236fcbc0c83171086cda1d3f296c59ebe6cddfd0de43014ac923f1
+updated: 2018-09-08T18:24:57.329552+08:00
+imports: []
 testImports:
 - name: github.com/davecgh/go-spew
   version: d8f796af33cc11cb798c1aaeb27a4ebc5099927d

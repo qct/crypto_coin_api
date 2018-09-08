@@ -4,7 +4,7 @@ package okcoin
 //import (
 //	"encoding/json"
 //	"errors"
-//	. "github.com/qct/cryptocurrency-exchange-api"
+//	. "cryptocurrency-exchange-api"
 //	"net/http"
 //	"net/url"
 //	"strconv"
