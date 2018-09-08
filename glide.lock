@@ -1,8 +1,8 @@
 hash: af08d3c21aa5850d6e668abd8b8fb48509469e38e254c528286b331572d7ccc7
-updated: 2018-09-08T18:07:32.886008+08:00
+updated: 2018-09-08T18:12:44.588825+08:00
 imports:
 - name: github.com/qct/cryptocurrency-exchange-api
-  version: b7002ef1121793b3b9565e4cf6dfeac53a039fee
+  version: b7de084c5f19e54e0b34c1fb17f53ee7b99eee08
   subpackages:
   - builder
   - chbtc

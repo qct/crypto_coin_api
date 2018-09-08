@@ -10,7 +10,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/qct/crypto_coin_api"
+	. "github.com/qct/cryptocurrency-exchange-api"
 	"sort"
 )
 

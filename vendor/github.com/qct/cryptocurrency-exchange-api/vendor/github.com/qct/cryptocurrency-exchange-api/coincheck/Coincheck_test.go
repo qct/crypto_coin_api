@@ -2,7 +2,7 @@ package coincheck
 
 //
 //import (
-//	"github.com/qct/crypto_coin_api"
+//	"github.com/qct/cryptocurrency-exchange-api"
 //	"github.com/stretchr/testify/assert"
 //	"net/http"
 //	"testing"

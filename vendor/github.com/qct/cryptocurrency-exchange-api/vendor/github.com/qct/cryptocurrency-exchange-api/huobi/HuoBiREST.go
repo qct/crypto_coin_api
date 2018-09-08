@@ -2,7 +2,7 @@ package huobi
 
 //
 //import (
-//    . "github.com/qct/crypto_coin_api"
+//    . "github.com/qct/cryptocurrency-exchange-api"
 //    "errors"
 //    "fmt"
 //    "log"
