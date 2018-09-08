@@ -1,0 +1,13 @@
+package: cryptocurrency-exchange-api
+import:
+- package: github.com/qct/cryptocurrency-exchange-api
+  version: ^2.1.0
+  subpackages:
+  - chbtc
+  - okcoin
+  - poloniex
+testImport:
+- package: github.com/stretchr/testify
+  version: ^1.2.2
+  subpackages:
+  - assert
