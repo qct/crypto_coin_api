@@ -19,6 +19,7 @@ type OKExV3SwapWs struct {
 	depthCallback  func(*Depth)
 	tradeCallback  func(*Trade, string)
 	klineCallback  func(*FutureKline, int)
+	orderCallback  func(order *FutureOrder)
 }
 
 func NewOKExV3SwapWs(base *OKEx) *OKExV3SwapWs {
@@ -26,6 +27,14 @@ func NewOKExV3SwapWs(base *OKEx) *OKExV3SwapWs {
 		base: base,
 	}
 	okV3Ws.v3Ws = NewOKExV3Ws(base, okV3Ws.handle)
+	return okV3Ws
+}
+
+func NewOKExV3SwapWsWithAuth(base *OKEx) *OKExV3SwapWs {
+	okV3Ws := &OKExV3SwapWs{
+		base: base,
+	}
+	okV3Ws.v3Ws = NewOKExV3WsWithAuth(base, okV3Ws.handle)
 	return okV3Ws
 }
 
@@ -43,6 +52,10 @@ func (okV3Ws *OKExV3SwapWs) TradeCallback(tradeCallback func(*Trade, string)) {
 
 func (okV3Ws *OKExV3SwapWs) KlineCallback(klineCallback func(*FutureKline, int)) {
 	okV3Ws.klineCallback = klineCallback
+}
+
+func (okV3Ws *OKExV3SwapWs) OrderCallback(orderCallback func(*FutureOrder)) {
+	okV3Ws.orderCallback = orderCallback
 }
 
 func (okV3Ws *OKExV3SwapWs) SetCallbacks(tickerCallback func(*FutureTicker),
@@ -125,6 +138,21 @@ func (okV3Ws *OKExV3SwapWs) SubscribeTrade(currencyPair CurrencyPair, contractTy
 		"args": []string{fmt.Sprintf(chName, "trade")}})
 }
 
+func (okV3Ws *OKExV3SwapWs) SubscribeOrder(currencyPair CurrencyPair, contractType string) error {
+	if okV3Ws.orderCallback == nil {
+		return errors.New("please set order callback func")
+	}
+
+	chName := okV3Ws.getChannelName(currencyPair, contractType)
+	if chName == "" {
+		return errors.New("subscribe error, get channel name fail")
+	}
+
+	return okV3Ws.v3Ws.Subscribe(map[string]interface{}{
+		"op":   "subscribe",
+		"args": []string{fmt.Sprintf(chName, "order")}})
+}
+
 func (okV3Ws *OKExV3SwapWs) SubscribeKline(currencyPair CurrencyPair, contractType string, period int) error {
 	if okV3Ws.klineCallback == nil {
 		return errors.New("place set kline callback func")
@@ -168,6 +196,7 @@ func (okV3Ws *OKExV3SwapWs) handle(channel string, data json.RawMessage) error {
 		tickers       []tickerResponse
 		depthResp     []depthResponse
 		dep           Depth
+		orders        []futureOrderResponse
 		tradeResponse []struct {
 			Side         string  `json:"side"`
 			TradeId      int64   `json:"trade_id,string"`
@@ -300,6 +329,15 @@ func (okV3Ws *OKExV3SwapWs) handle(channel string, data json.RawMessage) error {
 				Date:   t.Unix(),
 				Pair:   pair,
 			}, alias)
+		}
+		return nil
+	case "order":
+		err = json.Unmarshal(data, &orders)
+		if err != nil {
+			return err
+		}
+		for _, o := range orders {
+			okV3Ws.base.OKExFuture.adaptOrder(o)
 		}
 		return nil
 	}
